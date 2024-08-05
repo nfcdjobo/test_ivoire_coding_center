@@ -1,113 +1,150 @@
 
-import { useState } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import { get_cookie } from "../cookies/cookies";
 import { Titre } from "./SemiComposent/SemiComponent";
+import { FindById } from "../cookies/usermanagement";
+import cover from "../ressource/images/cover.png";
+
 
 
 function Profile(props) {
     const cookies = get_cookie("cookies_blog");
     if(!cookies) window.location.href = "/connexion";
-    return (
-        <>
-            <Header/>
-            <Titre titre="Mon profile"/>
-            <div className="container mx-auto flex flex-wrap py-6">
-                <section className="w-full md:w-2/3 flex flex-col items-center px-3">
+    const user = FindById("users", cookies.id);
+  if (!cookies) window.location.href = "/connexion";
+  return (
+    <>
+      <Header />
+      <Titre titre="Mon profile" />
+      <div class="flex h-screen overflow-hidden">
+      <div
+        class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden"
+      >
 
-                    <article className="flex flex-col shadow my-4">
-                        
-                        <a href="/" className="hover:opacity-75">
-                            <img src="" alt=""/>
-                        </a>
-                        <div className="bg-white flex flex-col justify-start p-6">
-                            <a href="/" className="text-blue-700 text-sm font-bold uppercase pb-4">Technologie</a>
-                            <a href="/" className="text-3xl font-bold hover:text-gray-700 pb-4">Lorem Ipsum Dolor Sit Amet Dolor Sit Amet</a>
-                            <p href="/" className="text-sm pb-8">
-                                By <a href="/" className="font-semibold hover:text-gray-800">David Grzyb</a>, Published on April 25th, 2020
-                            </p>
-                            <h1 className="text-2xl font-bold pb-3">Introduction</h1>
-                            <p className="pb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel neque non libero suscipit suscipit eu eu urna. Proin bibendum urna mattis ante malesuada ultrices. Etiam in turpis vitae elit dictum aliquet. Donec mattis risus in turpis dapibus, eget tempus sem tincidunt. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In est enim, imperdiet sed ornare quis, pellentesque vel risus. Nunc vitae vestibulum turpis. Quisque eget eleifend urna. Etiam et vulputate purus, ut egestas sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis quis neque non urna venenatis mollis et at massa. Pellentesque sem lacus, malesuada vel hendrerit molestie, mollis vel elit.</p>
-                            <h1 className="text-2xl font-bold pb-3">Heading</h1>
-                            <p className="pb-3">Vivamus nec facilisis elit, quis congue justo. In non augue ex. Aenean pretium facilisis hendrerit. Sed sed imperdiet dui. Etiam faucibus a diam sed vehicula. Nullam commodo lacus tincidunt, tincidunt orci sed, dapibus leo. Vivamus vulputate quis risus a ultricies. Aliquam luctus id tellus non condimentum. Aenean maximus viverra ipsum eget vestibulum. Morbi ut tincidunt sem, efficitur volutpat tortor. Donec scelerisque, ipsum eu efficitur semper, neque turpis sodales quam, in aliquam elit lacus varius lorem. Ut ut diam id leo efficitur malesuada eget in velit. Pellentesque tristique orci nunc, vitae fermentum nibh luctus eu. Mauris condimentum justo sed ipsum egestas varius.</p>
-                            <p className="pb-3">Sed sagittis odio a volutpat feugiat. Cras aliquam varius justo, a rhoncus ante bibendum id. Nulla maximus nisl sed enim maximus, ut dictum lectus hendrerit. Fusce venenatis tincidunt eros. Phasellus quis augue vulputate ipsum pellentesque fringilla. Morbi nec tempor felis. Maecenas sollicitudin pellentesque dui, sit amet scelerisque mauris elementum nec. Cras ante metus, mattis in malesuada in, fermentum a nunc. Suspendisse potenti. Sed tempor lacus sed commodo dignissim. Quisque dictum, dolor auctor iaculis cursus, ipsum urna porttitor ex, sed consequat nisi tellus eget ante. Duis molestie mollis eros, eu sollicitudin mauris lobortis quis.</p>
-                            <p className="pb-3">Vivamus sed neque nec massa scelerisque imperdiet eget id sapien. Fusce elementum mi id malesuada luctus. Proin quis lorem id leo porta interdum non ac nisl. Integer nulla sem, ultrices sed neque eget, blandit condimentum metus. Aliquam eget malesuada sapien. Curabitur aliquet orci sit amet ex tincidunt convallis. Mauris urna mi, consequat mattis mollis a, dignissim eget sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam facilisis sem diam, viverra consequat metus consequat vel. Cras a mi eu ex luctus malesuada quis eu ante. Aliquam erat volutpat.</p>
-                            <h1 className="text-2xl font-bold pb-3">Conclusion</h1>
-                            <p className="pb-3">Donec vulputate auctor leo lobortis congue. Sed elementum pharetra turpis. Nulla at condimentum odio. Vestibulum ullamcorper enim eget porttitor bibendum. Proin eros nibh, maximus vitae nisi a, blandit ultricies lectus. Vivamus eu maximus lacus. Maecenas imperdiet iaculis neque, vitae efficitur felis vestibulum sagittis. Nunc a eros aliquet, egestas tortor hendrerit, posuere diam. Proin laoreet, ligula non eleifend bibendum, orci nulla luctus ipsum, dignissim convallis quam dolor et nulla.</p>
-                        </div>
-                    </article>
+      <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+        <div class="mx-auto max-w-242.5">
 
-                    <div className="w-full flex pt-6">
-                        <a href="/" className="w-1/2 bg-white shadow hover:shadow-md text-left p-6">
-                            <p className="text-lg text-blue-800 font-bold flex items-center"><i className="fas fa-arrow-left pr-1"></i> Previous</p>
-                            <p className="pt-2">Lorem Ipsum Dolor Sit Amet Dolor Sit Amet</p>
-                        </a>
-                        <a href="/" className="w-1/2 bg-white shadow hover:shadow-md text-right p-6">
-                            <p className="text-lg text-blue-800 font-bold flex items-center justify-end">Next <i className="fas fa-arrow-right pl-1"></i></p>
-                            <p className="pt-2">Lorem Ipsum Dolor Sit Amet Dolor Sit Amet</p>
-                        </a>
-                    </div>
-
-                    <div className="w-full flex flex-col text-center md:text-left md:flex-row shadow bg-white mt-10 mb-10 p-6">
-                        <div className="w-full md:w-1/5 flex justify-center md:justify-start pb-4">
-                            <img src="" className="rounded-full shadow h-32 w-32" alt=""/>
-                        </div>
-                        <div className="flex-1 flex flex-col justify-center md:justify-start">
-                            <p className="font-semibold text-2xl">David</p>
-                            <p className="pt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel neque non libero suscipit suscipit eu eu urna.</p>
-                            <div className="flex items-center justify-center md:justify-start text-2xl no-underline text-blue-800 pt-4">
-                                <a className="" href="/">
-                                    <i className="fab fa-facebook"></i>
-                                </a>
-                                <a className="pl-4" href="/">
-                                    <i className="fab fa-instagram"></i>
-                                </a>
-                                <a className="pl-4" href="/">
-                                    <i className="fab fa-twitter"></i>
-                                </a>
-                                <a className="pl-4" href="/">
-                                    <i className="fab fa-linkedin"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                </section>
-
-                <aside className="w-full md:w-1/3 flex flex-col items-center px-3">
-
-                    <div className="w-full bg-white shadow flex flex-col my-4 p-6">
-                        <p className="text-xl font-semibold pb-5">À propos</p>
-                        <p className="pb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis est eu odio sagittis tristique. Vestibulum ut finibus leo. In hac habitasse platea dictumst.</p>
-                        <a href="/" className="w-full bg-blue-800 text-white font-bold text-sm uppercase rounded hover:bg-blue-700 flex items-center justify-center px-2 py-3 mt-4">
-                            Apprendre a nous connaitre
-                        </a>
-                    </div>
-
-                    <div className="w-full bg-white shadow flex flex-col my-4 p-6">
-                        <p className="text-xl font-semibold pb-5">Instagram</p>
-                        <div className="grid grid-cols-3 gap-3">
-                            <img className="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=1" alt=""/>
-                            <img className="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=2" alt=""/>
-                            <img className="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=3" alt=""/>
-                            <img className="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=4" alt=""/>
-                            <img className="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=5" alt=""/>
-                            <img className="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=6" alt=""/>
-                            <img className="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=7" alt=""/>
-                            <img className="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=8" alt=""/>
-                            <img className="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=9" alt=""/>
-                        </div>
-                        <a href="/" className="w-full bg-blue-800 text-white font-bold text-sm uppercase rounded hover:bg-blue-700 flex items-center justify-center px-2 py-3 mt-6">
-                            <i className="fab fa-instagram mr-2"></i> Suivez @djobo
-                        </a>
-                    </div>
-
-                </aside>
+          {/* <!-- ====== Profile Section Start --> */}
+          <div class="overflow-hidden rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+            <div class="relative z-20 h-35 md:h-65">
+              <img
+                src={cover}
+                alt="profile cover"
+                class="h-15 w-15 rounded-tl-sm rounded-tr-sm object-cover object-center"
+              />
+              <div class="absolute bottom-1 right-1 z-10 xsm:bottom-4 xsm:right-4">
+                <label
+                  for="cover"
+                  class="flex cursor-pointer items-center justify-center gap-2 rounded bg-primary px-2 py-1 text-sm font-medium text-white hover:bg-opacity-80 xsm:px-4"
+                >
+                  <input type="file" name="cover" id="cover" class="sr-only" />
+                  <span>
+                    <svg
+                      class="fill-current"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M4.76464 1.42638C4.87283 1.2641 5.05496 1.16663 5.25 1.16663H8.75C8.94504 1.16663 9.12717 1.2641 9.23536 1.42638L10.2289 2.91663H12.25C12.7141 2.91663 13.1592 3.101 13.4874 3.42919C13.8156 3.75738 14 4.2025 14 4.66663V11.0833C14 11.5474 13.8156 11.9925 13.4874 12.3207C13.1592 12.6489 12.7141 12.8333 12.25 12.8333H1.75C1.28587 12.8333 0.840752 12.6489 0.512563 12.3207C0.184375 11.9925 0 11.5474 0 11.0833V4.66663C0 4.2025 0.184374 3.75738 0.512563 3.42919C0.840752 3.101 1.28587 2.91663 1.75 2.91663H3.77114L4.76464 1.42638ZM5.56219 2.33329L4.5687 3.82353C4.46051 3.98582 4.27837 4.08329 4.08333 4.08329H1.75C1.59529 4.08329 1.44692 4.14475 1.33752 4.25415C1.22812 4.36354 1.16667 4.51192 1.16667 4.66663V11.0833C1.16667 11.238 1.22812 11.3864 1.33752 11.4958C1.44692 11.6052 1.59529 11.6666 1.75 11.6666H12.25C12.4047 11.6666 12.5531 11.6052 12.6625 11.4958C12.7719 11.3864 12.8333 11.238 12.8333 11.0833V4.66663C12.8333 4.51192 12.7719 4.36354 12.6625 4.25415C12.5531 4.14475 12.4047 4.08329 12.25 4.08329H9.91667C9.72163 4.08329 9.53949 3.98582 9.4313 3.82353L8.43781 2.33329H5.56219Z"
+                        fill="white"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M6.99992 5.83329C6.03342 5.83329 5.24992 6.61679 5.24992 7.58329C5.24992 8.54979 6.03342 9.33329 6.99992 9.33329C7.96642 9.33329 8.74992 8.54979 8.74992 7.58329C8.74992 6.61679 7.96642 5.83329 6.99992 5.83329ZM4.08325 7.58329C4.08325 5.97246 5.38909 4.66663 6.99992 4.66663C8.61075 4.66663 9.91659 5.97246 9.91659 7.58329C9.91659 9.19412 8.61075 10.5 6.99992 10.5C5.38909 10.5 4.08325 9.19412 4.08325 7.58329Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </span>
+                  <span>Edit</span>
+                </label>
+              </div>
             </div>
-        </>
-        
-    )
+            <div class="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
+              <div class="relative z-30 mx-auto -mt-22 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3">
+                <div class="relative drop-shadow-2">
+                  <img src={cookies.photo} alt="profile" className="w-24 h-24 rounded-full object-cover" />
+                  <label
+                    for="profile"
+                    class="absolute bottom-0 right-0 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-primary text-white hover:bg-opacity-90 sm:bottom-2 sm:right-2"
+                  >
+                    <svg
+                      class="fill-current"
+                      width="14"
+                      height="14"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M4.76464 1.42638C4.87283 1.2641 5.05496 1.16663 5.25 1.16663H8.75C8.94504 1.16663 9.12717 1.2641 9.23536 1.42638L10.2289 2.91663H12.25C12.7141 2.91663 13.1592 3.101 13.4874 3.42919C13.8156 3.75738 14 4.2025 14 4.66663V11.0833C14 11.5474 13.8156 11.9925 13.4874 12.3207C13.1592 12.6489 12.7141 12.8333 12.25 12.8333H1.75C1.28587 12.8333 0.840752 12.6489 0.512563 12.3207C0.184375 11.9925 0 11.5474 0 11.0833V4.66663C0 4.2025 0.184374 3.75738 0.512563 3.42919C0.840752 3.101 1.28587 2.91663 1.75 2.91663H3.77114L4.76464 1.42638ZM5.56219 2.33329L4.5687 3.82353C4.46051 3.98582 4.27837 4.08329 4.08333 4.08329H1.75C1.59529 4.08329 1.44692 4.14475 1.33752 4.25415C1.22812 4.36354 1.16667 4.51192 1.16667 4.66663V11.0833C1.16667 11.238 1.22812 11.3864 1.33752 11.4958C1.44692 11.6052 1.59529 11.6666 1.75 11.6666H12.25C12.4047 11.6666 12.5531 11.6052 12.6625 11.4958C12.7719 11.3864 12.8333 11.238 12.8333 11.0833V4.66663C12.8333 4.51192 12.7719 4.36354 12.6625 4.25415C12.5531 4.14475 12.4047 4.08329 12.25 4.08329H9.91667C9.72163 4.08329 9.53949 3.98582 9.4313 3.82353L8.43781 2.33329H5.56219Z"
+                        fill=""
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M7.00004 5.83329C6.03354 5.83329 5.25004 6.61679 5.25004 7.58329C5.25004 8.54979 6.03354 9.33329 7.00004 9.33329C7.96654 9.33329 8.75004 8.54979 8.75004 7.58329C8.75004 6.61679 7.96654 5.83329 7.00004 5.83329ZM4.08337 7.58329C4.08337 5.97246 5.38921 4.66663 7.00004 4.66663C8.61087 4.66663 9.91671 5.97246 9.91671 7.58329C9.91671 9.19412 8.61087 10.5 7.00004 10.5C5.38921 10.5 4.08337 9.19412 4.08337 7.58329Z"
+                        fill=""
+                      />
+                    </svg>
+                    <input
+                      type="file"
+                      name="profile"
+                      id="profile"
+                      class="sr-only"
+                    />
+                  </label>
+                </div>
+              </div>
+              <div class="mt-4">
+                <h3 class="mb-1.5 text-2xl font-medium text-black dark:text-white">
+                  Danish Heilium
+                </h3>
+                <p class="font-medium">Ui/Ux Designer</p>
+                <div class="mx-auto mb-5.5 mt-4.5 grid max-w-94 grid-cols-3 rounded-md border border-stroke py-2.5 shadow-1 dark:border-strokedark dark:bg-[#37404F]">
+                  <div class="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
+                    <span class="font-semibold text-black dark:text-white">
+                      259
+                    </span>
+                    <span class="text-sm">Posts</span>
+                  </div>
+                  <div class="flex flex-col items-center justify-center gap-1 border-r border-stroke px-4 dark:border-strokedark xsm:flex-row">
+                    <span class="font-semibold text-black dark:text-white">
+                      129K
+                    </span>
+                    <span class="text-sm">Followers</span>
+                  </div>
+                  <div class="flex flex-col items-center justify-center gap-1 px-4 xsm:flex-row">
+                    <span class="font-semibold text-black dark:text-white">
+                      2K
+                    </span>
+                    <span class="text-sm">Following</span>
+                  </div>
+                </div>
+
+                
+
+                
+              </div>
+            </div>
+          </div>
+          {/* <!-- ====== Profile Section End --> */}
+        </div>
+      </div>
+      </div>
+      </div>
+
+      <Footer />
+    </>
+  );
 }
 
 export default Profile;

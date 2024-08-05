@@ -1,21 +1,19 @@
-
-import { get_cookie } from "../cookies/cookies";
-import { FindById, FormatDate } from "../cookies/usermanagement";
-import Footer from "./Footer";
-import Header from "./Header";
-import { useLocation } from "react-router-dom";
-import { Titre } from "./SemiComposent/SemiComponent";
-
+import { get_cookie } from "../cookies/cookies";  // Importation de la fonction get_cookie du fichier cookies.js dans le dossier cookies
+import { FindById, FormatDate } from "../cookies/usermanagement";  // Importation des fonctions FindById et FormatDate du fichier usermanagement.js dans le dossier cookies
+import Footer from "./Footer";  // Importation du composant Footer
+import Header from "./Header";  // Importation du composant Header
+import { useLocation } from "react-router-dom";  // Importation du hook useLocation de react-router-dom pour accéder à l'emplacement actuel dans l'application
+import { Titre } from "./SemiComposent/SemiComponent";  // Importation du composant Titre de SemiComponent.js dans le dossier SemiComposent
 
 const useQuery = () => {
-    return new URLSearchParams(useLocation().search);
+    return new URLSearchParams(useLocation().search);  // Définition de la fonction useQuery pour récupérer les paramètres de requête de l'URL
 };
 
-function Lecture(props) {
-    const cookies = get_cookie("cookies_blog");
-    if (!cookies) window.location.href = "/connexion";
-    const reference = Number(useQuery().get('poste'));
-    const blog = FindById("blogs", reference);
+function Lecture(props) {  // Définition du composant fonctionnel Lecture
+    const cookies = get_cookie("cookies_blog");  // Récupération des cookies nommés "cookies_blog"
+    if (!cookies) window.location.href = "/connexion";  // Redirection vers la page de connexion si les cookies n'existent pas
+    const reference = Number(useQuery().get('poste'));  // Récupération de la valeur du paramètre 'poste' de l'URL et conversion en nombre
+    const blog = FindById("blogs", reference);  // Recherche du blog par son identifiant en utilisant la fonction FindById
     
     return (
         <>
@@ -34,7 +32,7 @@ function Lecture(props) {
                         <div className="bg-white flex flex-col justify-start p-1">
                             <a href="#" className="text-blue-700 text-sm font-bold uppercase pb-4">{FindById("categories", blog.categorie).libelle}</a>
                             <a href="#" className="text-3xl font-bold hover:text-gray-700 pb-4">{blog.titre}</a>
-                            <p className="text-sm pb-8"><a href="#" className="font-semibold hover:text-gray-800"></a>Publiée le {FormatDate(new Date(blog.date_publication))}
+                            <p className="text-sm pb-8">Par <a href="#" className="font-semibold hover:text-gray-800"> {FindById("users", blog.user_id).nom+" "+FindById("users", blog.user_id).prenom}</a>, Publiée le {FormatDate(new Date(blog.date_publication))}
                             </p>
                             <h1 className="text-2xl font-bold pb-3">{blog.description}</h1>
                         </div>

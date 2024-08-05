@@ -1,37 +1,32 @@
+import { useEffect, useState } from "react";  // Importation des hooks useEffect et useState de React
+import Footer from "./Footer";  // Importation du composant Footer
+import Header from "./Header";  // Importation du composant Header
+import { get_cookie } from "../cookies/cookies";  // Importation de la fonction get_cookie à partir du fichier cookies.js dans le dossier cookies
+import { Find, FindById } from "../cookies/usermanagement";  // Importation des fonctions Find et FindById de la gestion des utilisateurs
+import { formatDistanceToNow } from 'date-fns';  // Importation de la fonction formatDistanceToNow de la bibliothèque date-fns
+import { fr } from 'date-fns/locale';  // Importation de la localisation française de la bibliothèque date-fns
+import { Titre } from "./SemiComposent/SemiComponent";  // Importation du composant Titre à partir de SemiComponent.js dans le dossier SemiComposent
 
-import { useEffect, useState } from "react";
-import Footer from "./Footer";
-import Header from "./Header";
-import { get_cookie } from "../cookies/cookies";
-import { Find, FindById } from "../cookies/usermanagement";
-import { formatDistanceToNow } from 'date-fns';
-import { fr } from 'date-fns/locale';
-import { Titre } from "./SemiComposent/SemiComponent";
+function Enattente(props) {  // Définition du composant fonctionnel Enattente
+    const [card, setCard] = useState([]);  // Déclaration de l'état local pour stocker les blogs en attente
+    const cookies = get_cookie("cookies_blog");  // Récupération des cookies nommés "cookies_blog"
+    if (!cookies) window.location.href = "/connexion";  // Si les cookies n'existent pas, redirige vers la page de connexion
 
+    const blogs = Find("blogs");  // Récupération de tous les blogs
 
-function Enattente(props) {
-    const [card, setCard] = useState([])
-    const cookies = get_cookie("cookies_blog");
-    if(!cookies) window.location.href = "/connexion";
-    const blogs = Find("blogs");
+    const mesblogs = blogs.filter(item => item.user_id === cookies.id);  // Filtre les blogs appartenant à l'utilisateur connecté
 
-    const mesblogs = blogs.filter(item => item.user_id === cookies.id)
     const backgroundStyle = {
-        backgroundImage: 'url("/images/mybackground.jpeg")',
+        backgroundImage: 'url("/images/mybackground.jpeg")',  // Définition du style de fond
     };
 
-    const formatDate = (date) => {
+    const formatDate = (date) => {  // Fonction pour formater les dates
         return formatDistanceToNow(new Date(date), { addSuffix: true, locale: fr });
     };
 
-
-     useEffect(() => {
-         setCard(mesblogs.filter(item => !Boolean(item.action)))
-       },
-     []);
-
-     
-
+    useEffect(() => {
+        setCard(mesblogs.filter(item => !Boolean(item.action)));  // Filtre les blogs en attente et met à jour l'état card
+    }, []);  // Déclenche l'effet au montage du composant
 
 
     return (
@@ -49,18 +44,16 @@ function Enattente(props) {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-center px-2 mx-auto">
                                 {card.length ? card.map((item, index) => (
                                     <article class="bg-white  p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border">
-                                        <a target="_self" href={item.id+"/mes-blogs"} class="absolute opacity-0 top-0 right-0 left-0 bottom-0">rer</a>
+                                        <a target="_self" href={`/lecture?poste=${item.id}`} class="absolute opacity-0 top-0 right-0 left-0 bottom-0">rer</a>
                                         <div class="relative mb-4 rounded-2xl">
                                             <img class="max-h-80 rounded-2xl w-full object-cover transition-transform duration-300 transform group-hover:scale-105"
                                                 src={item.couverture} alt=""/>
                                             <div class="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
                                              
-                                               
-                
                                             </div>
                 
                                             <a class="flex justify-center items-center bg-red-700 bg-opacity-80 z-10 absolute top-0 left-0 w-full h-full text-white rounded-2xl opacity-0 transition-all duration-300 transform group-hover:scale-105 text-xl group-hover:opacity-100"
-                                                href={item.id+"/mes-blogs"} target="_self" rel="noopener noreferrer">
+                                                href={`/lecture?poste=${item.id}`} target="_self" rel="noopener noreferrer">
                                                 Lire le poste
                                                 <svg class="ml-2 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                                     xmlns="http://www.w3.org/2000/svg">
@@ -117,10 +110,6 @@ function Enattente(props) {
                                     </article>
                                 )) : null}
                                 </div>
-                            
-
-                           
-                        
                         </div>
                     </div>
                 </div>

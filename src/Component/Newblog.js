@@ -1,84 +1,82 @@
-import React, { useState } from "react";
-import { CKEditor } from "ckeditor4-react";
-import Footer from "./Footer";
-import Header from "./Header";
-import { get_cookie } from "../cookies/cookies";
-import { Create, Find } from "../cookies/usermanagement";
-import { useNavigate } from "react-router-dom";
-import { Titre } from "./SemiComposent/SemiComponent";
+import React, { useState } from "react";  // Importation des hooks useState et des éléments de React
+import { CKEditor } from "ckeditor4-react";  // Importation du composant CKEditor pour l'édition de texte riche
+import Footer from "./Footer";  // Importation du composant Footer
+import Header from "./Header";  // Importation du composant Header
+import { get_cookie } from "../cookies/cookies";  // Importation de la fonction get_cookie du fichier cookies.js dans le dossier cookies
+import { Create, Find } from "../cookies/usermanagement";  // Importation des fonctions Create et Find du fichier usermanagement.js dans le dossier cookies
+import { useNavigate } from "react-router-dom";  // Importation du hook useNavigate pour la navigation
+import { Titre } from "./SemiComposent/SemiComponent";  // Importation du composant Titre de SemiComponent.js dans le dossier SemiComposent
 
+function Newblog(props) {  // Définition du composant fonctionnel Newblog
+  const cookies = get_cookie("cookies_blog");  // Récupération des cookies nommés "cookies_blog"
+  if (!cookies) window.location.href = "/connexion";  // Redirection vers la page de connexion si les cookies n'existent pas
+  const navigate = useNavigate();  // Initialisation du hook useNavigate pour la navigation
 
+  // State pour gérer les données du formulaire
+  const [titre, setTitre] = useState("");  // État pour le titre du blog
+  const [description, setDescription] = useState("");  // État pour la description du blog
+  const [contenu, setContenu] = useState("");  // État pour le contenu du blog
+  const [action, setAction] = useState(1);  // État pour la publication (1 = publié, 0 = en attente)
+  const [categorie, setCategories] = useState("");  // État pour la catégorie du blog
+  const [error, setError] = useState("");  // État pour les messages d'erreur
+  const [couverture, setCouverture] = useState("");  // État pour l'image de couverture du blog
 
-function Newblog(props) {
-  const cookies = get_cookie("cookies_blog");
-  if (!cookies) window.location.href = "/connexion";
-  const natigate = useNavigate();
+  const categories = Find("categories");  // Récupération des catégories via la fonction Find
 
-  // State to manage form data
-  const [titre, setTitre] = useState("");
-  const [description, setDescription] = useState("");
-  const [contenu, setContenu] = useState("");
-  const [action, setAction] = useState(1);
-  const [categorie, setCategories] = useState("");
-  const [error, setError] = useState("");
-  const [couverture, setCouverture] = useState("");
-
-  const categories = Find("categories");
-
-  // Handle CKEditor changes
+  // Gestion des changements dans CKEditor
   const handleEditorChange = (event) => {
-    setContenu(event.editor.getData());
+    setContenu(event.editor.getData());  // Mise à jour de l'état 'contenu' avec les données de l'éditeur
   };
 
+  // Gestion des changements d'image
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files[0];  // Récupération du fichier sélectionné
     if (file) {
-      const reader = new FileReader();
+      const reader = new FileReader();  // Création d'un FileReader pour lire le fichier
       reader.onloadend = () => {
-        setCouverture(reader.result);
+        setCouverture(reader.result);  // Mise à jour de l'état 'couverture' avec le résultat de la lecture du fichier
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file);  // Lecture du fichier en tant qu'URL de données
     }
   };
 
-  // Handle form submission
+  // Gestion de la soumission du formulaire
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();  // Empêche le comportement par défaut de soumission du formulaire
 
     if (contenu.trim() === "") {
-      setError("Le contenu du blog est requis.");
+      setError("Le contenu du blog est requis.");  // Affiche une erreur si le contenu est vide
       return;
     }
 
-    // Gather form data
+    // Rassemblement des données du formulaire
     const formData = {
       titre,
       description,
       contenu,
       action,
       categorie,
-      user_id: cookies.id,
+      user_id: cookies.id,  // Utilisation de l'ID de l'utilisateur à partir des cookies
       couverture,
-      date_publication: action ? new Date() : null
+      date_publication: action ? new Date() : null  // Définition de la date de publication en fonction de l'action
     };
 
+    const newBlog = Create("blogs", formData);  // Création du nouveau blog via la fonction Create
 
-      const newBlog = Create("blogs", formData);
-
-      // Optionally clear the form fields or show a success message
-      setTitre("");
-      setDescription("");
-      setContenu("");
-      setCategories("");
-      setCouverture("");
-      setAction(1);
-      if(Number(newBlog.data.action)){
-        alert("Blog créé et publié avec succès");
-        natigate("/mes-blogs");
-      }else{
-        alert("Blog créé et en attente de publication");
-        natigate("/blog-en-attend")
-      }
+    // Réinitialisation des champs du formulaire ou affichage d'un message de succès
+    setTitre("");
+    setDescription("");
+    setContenu("");
+    setCategories("");
+    setCouverture("");
+    setAction(1);
+    if (Number(newBlog.data.action)) {
+      alert("Blog créé et publié avec succès");  // Affiche un message de succès si le blog est publié
+      navigate("/mes-blogs");  // Redirection vers la page des blogs
+    } else {
+      alert("Blog créé et en attente de publication");  // Affiche un message si le blog est en attente de publication
+      navigate("/blog-en-attend");  // Redirection vers la page des blogs en attente
+    }
   };
 
   return (

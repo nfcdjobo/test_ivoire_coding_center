@@ -1,30 +1,26 @@
-import React, { useState } from "react";
-import { CKEditor } from "ckeditor4-react";
-import Footer from "./Footer";
-import Header from "./Header";
-import { get_cookie } from "../cookies/cookies";
-import { Create, Find, FindById, FindOne, FindOneAndUpdate } from "../cookies/usermanagement";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Titre } from "./SemiComposent/SemiComponent";
-
-
+import React, { useState } from "react";  // Importation de React et du hook useState
+import { CKEditor } from "ckeditor4-react";  // Importation du composant CKEditor
+import Footer from "./Footer";  // Importation du composant Footer
+import Header from "./Header";  // Importation du composant Header
+import { get_cookie } from "../cookies/cookies";  // Importation de la fonction get_cookie à partir du fichier cookies.js dans le dossier cookies
+import { Create, Find, FindById, FindOne, FindOneAndUpdate } from "../cookies/usermanagement";  // Importation des fonctions de gestion utilisateur
+import { useLocation, useNavigate } from "react-router-dom";  // Importation des hooks useLocation et useNavigate de react-router-dom
+import { Titre } from "./SemiComposent/SemiComponent";  // Importation du composant Titre à partir de SemiComponent.js dans le dossier SemiComposent
 
 const useQuery = () => {
-    return new URLSearchParams(useLocation().search);
+    return new URLSearchParams(useLocation().search);  // Définition d'un hook personnalisé pour récupérer les paramètres de l'URL
 };
 
+function Edite(props) {  // Définition du composant fonctionnel Edite
+  const cookies = get_cookie("cookies_blog");  // Récupération des cookies nommés "cookies_blog"
+  if (!cookies) window.location.href = "/connexion";  // Si les cookies n'existent pas, redirige vers la page de connexion
 
+  const navigate = useNavigate();  // Initialisation du hook useNavigate pour la navigation
+  const reference = Number(useQuery().get('poste'));  // Récupération du paramètre 'poste' de l'URL et conversion en nombre
 
+  const blog = FindById("blogs", reference);  // Récupération du blog correspondant à l'ID de référence
 
-function Edite(props) {
-  const cookies = get_cookie("cookies_blog");
-
-  if (!cookies) window.location.href = "/connexion";
-  const navigate = useNavigate();
-  const reference = Number(useQuery().get('poste'));
-
-  const blog = FindById("blogs", reference);
-
+  // Déclaration des états locaux pour les différents champs du blog
   const [titre, setTitre] = useState(blog.titre);
   const [description, setDescription] = useState(blog.description);
   const [contenu, setContenu] = useState(blog.contenu);
@@ -33,13 +29,14 @@ function Edite(props) {
   const [error, setError] = useState("");
   const [couverture, setCouverture] = useState(blog.couverture);
 
-  const categories = Find("categories");
+  const categories = Find("categories");  // Récupération des catégories disponibles
 
-  // Handle CKEditor changes
+  // Fonction pour gérer les changements dans le CKEditor
   const handleEditorChange = (event) => {
     setContenu(event.editor.getData());
   };
 
+  // Fonction pour gérer les changements d'image
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -51,16 +48,16 @@ function Edite(props) {
     }
   };
 
-  // Handle form submission
+  // Fonction pour gérer la soumission du formulaire
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();  // Empêche la soumission par défaut du formulaire
 
-    if (contenu.trim() === "") {
+    if (contenu.trim() === "") {  // Vérifie si le contenu du blog est vide
       setError("Le contenu du blog est requis.");
       return;
     }
 
-    // Gather form data
+    // Collecte les données du formulaire
     const formData = {
       titre,
       description,
@@ -72,20 +69,26 @@ function Edite(props) {
       date_publication: action ? new Date() : null
     };
 
-      const updated =FindOneAndUpdate("blogs", formData, reference);
+    const newBlog = FindOneAndUpdate("blogs", formData, reference);  // Met à jour le blog existant
 
-      // Optionally clear the form fields or show a success message
-       setTitre("");
-       setDescription("");
-       setContenu("");
-       setCategories("");
-       setCouverture("");
-       setAction(1);
+    // Réinitialise les champs du formulaire
+    setTitre("");
+    setDescription("");
+    setContenu("");
+    setCategories("");
+    setCouverture("");
+    setAction(1);
 
-       alert(updated.message);
+    alert(newBlog.message);  // Affiche un message d'alerte avec la réponse du serveur
 
-      navigate('/mes-blogs');
-
+    navigate('/mes-blogs');  // Redirige vers la page 'mes-blogs'
+    if (Number(newBlog.data.action)) {  // Vérifie si le blog est publié
+      alert("Blog créé et publié avec succès");
+      navigate("/mes-blogs");  // Redirige vers la page 'mes-blogs'
+    } else {
+      alert("Blog créé et en attente de publication");
+      navigate("/blog-en-attend");  // Redirige vers la page 'blog-en-attend'
+    }
   };
 
   return (

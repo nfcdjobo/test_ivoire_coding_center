@@ -1,46 +1,47 @@
-import { AutreGroup, AutreOption, Input, InputSubmit } from "./SemiComposent/SemiComponent";
-import React, { useState } from 'react';
-import { get_cookie, save_cookie } from "../cookies/cookies";
-import { Create } from "../cookies/usermanagement";
+import { AutreOption, Input, InputSubmit } from "./SemiComposent/SemiComponent";  // Importation des composants Input, InputSubmit et AutreOption
+import React, { useState } from 'react';  // Importation des hooks useState et de React
+import { get_cookie } from "../cookies/cookies";  // Importation de la fonction get_cookie du fichier cookies.js dans le dossier cookies
+import { Create } from "../cookies/usermanagement";  // Importation de la fonction Create du fichier usermanagement.js dans le dossier cookies
 
+function Inscription(props) {  // Définition du composant fonctionnel Inscription
+    const [value, setvalue] = useState('');  // État pour la gestion de la valeur du mot de passe
+    const [photo, setPhoto] = useState('');  // État pour la gestion de la photo de profil
+    const cookies = get_cookie("cookies_blog");  // Récupération des cookies nommés "cookies_blog"
+    if (cookies) window.location.href = "/profile";  // Redirection vers la page de profil si les cookies existent
 
-
-function Inscription(props) {
-    const [value, setvalue] = useState('');
-    const [photo, setPhoto] = useState('');
-    const cookies = get_cookie("cookies_blog");
-    if(cookies) window.location.href = "/profile";
-
-
+    // Gestion des changements dans le champ de mot de passe
     const handlePasswordChange = (event) => {
-        setvalue(event.target.value);
+        setvalue(event.target.value);  // Mise à jour de l'état 'value' avec la valeur du champ de mot de passe
     };
 
+    // Gestion des changements d'image
     const handleImageChange = (e) => {
-        const file = e.target.files[0];
+        const file = e.target.files[0];  // Récupération du fichier sélectionné
         if (file) {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            setPhoto(reader.result);
-          };
-          
-          reader.readAsDataURL(file);
+            const reader = new FileReader();  // Création d'un FileReader pour lire le fichier
+            reader.onloadend = () => {
+                setPhoto(reader.result);  // Mise à jour de l'état 'photo' avec le résultat de la lecture du fichier
+            };
+            reader.readAsDataURL(file);  // Lecture du fichier en tant qu'URL de données
         }
-      };
+    };
 
+    // Gestion de la soumission du formulaire
     const savin_login = event => {
-        event.preventDefault();
-        const nom=event.target.nom;
-        const prenom = event.target.prenom;
-        const email = event.target.email;
-        
-        const password = event.target.password;
-        const passwordConfirm = event.target.passwordConfirm;
-        if(password.value !== passwordConfirm.value){
-            alert("Mot de passe de confirmation incorrect !");
+        event.preventDefault();  // Empêche le comportement par défaut de soumission du formulaire
+
+        const nom = event.target.nom;  // Récupération du champ nom
+        const prenom = event.target.prenom;  // Récupération du champ prénom
+        const email = event.target.email;  // Récupération du champ email
+        const password = event.target.password;  // Récupération du champ mot de passe
+        const passwordConfirm = event.target.passwordConfirm;  // Récupération du champ confirmation du mot de passe
+
+        if (password.value !== passwordConfirm.value) {
+            alert("Mot de passe de confirmation incorrect !");  // Affiche une erreur si les mots de passe ne correspondent pas
             return;
         }
 
+        // Rassemblement des données du formulaire
         const data = {
             nom: nom.value,
             prenom: prenom.value,
@@ -48,41 +49,28 @@ function Inscription(props) {
             photo,
             password: password.value,
             passwordConfirm: passwordConfirm.value
-        }
+        };
 
-        const newUser = Create("users", data);
+        const newUser = Create("users", data);  // Création du nouvel utilisateur via la fonction Create
 
-        if(!newUser.succes){
-            alert(newUser.message)
-            if(newUser.message === "Ce compte est déjà utilisé"){
-                window.location.href = "/connexion";
+        if (!newUser.succes) {
+            alert(newUser.message);  // Affiche un message d'erreur si la création de l'utilisateur échoue
+            if (newUser.message === "Ce compte est déjà utilisé") {
+                window.location.href = "/connexion";  // Redirection vers la page de connexion si le compte est déjà utilisé
             }
-            
-        }else{
-            alert(newUser.message);
-            window.location.href = "/connexion";
+        } else {
+            alert(newUser.message);  // Affiche un message de succès
+            window.location.href = "/connexion";  // Redirection vers la page de connexion après l'inscription réussie
         }
-    }
+    };
 
-    const inputRemember = {
-        htmlFor: "remember",
-        id: "remember",
-        name: "remember",
-        ariaDescribedby: "remember",
-        type: "checkbox",
-        className: "w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800",
-        LabelleClassName: "text-gray-500 dark:text-gray-300",
-        label: "Se souvenir de moi",
-        linkPath: "/connexion",
-        linkClassName: "text-sm font-medium text-primary-600 hover:underline dark:text-primary-500",
-        linkTexte: "Mot de passe oublié ?",
-    }
-
+    // Définition des options pour la redirection
     const oterOption = {
-        question: "Avez-vous déjà un compte ?",
-        path: "/connexion",
-        contentText: "Connexion"
-    }
+        question: "Avez-vous déjà un compte ?",  // Question affichée aux utilisateurs qui ont déjà un compte
+        path: "/connexion",  // Chemin de redirection pour les utilisateurs qui ont déjà un compte
+        contentText: "Connexion"  // Texte du lien de redirection
+    };
+    
     return (
         <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">

@@ -1,11 +1,9 @@
-import { SaveCategorie } from "../cookies/usermanagement";
-import Footer from "./Footer";
-import Header from "./Header";
+import { SaveCategorie } from "../cookies/usermanagement";  // Importation de la fonction SaveCategorie à partir du fichier usermanagement dans le dossier cookies
+import Footer from "./Footer";  // Importation du composant Footer
+import Header from "./Header";  // Importation du composant Header
 
-
-
-function Index(props) {
-    const categories = [
+function Index(props) {  // Définition du composant fonctionnel Index
+    const categories = [  // Déclaration d'un tableau d'objets pour les catégories
         {
             "libelle": "Technologie",
         },
@@ -30,8 +28,10 @@ function Index(props) {
         {
             "libelle": "Technologie",
         }
-      ];
-    categories.map(item => SaveCategorie("categories", item));
+    ];
+
+    categories.map(item => SaveCategorie("categories", item));  // Parcours de chaque élément du tableau categories et enregistrement de chaque catégorie à l'aide de la fonction SaveCategorie
+
 
     return (
         <>

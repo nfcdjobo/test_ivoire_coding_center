@@ -1,33 +1,30 @@
+import { useEffect, useState } from "react";  // Importation des hooks useEffect et useState de React
+import Footer from "./Footer";  // Importation du composant Footer
+import Header from "./Header";  // Importation du composant Header
+import { get_cookie } from "../cookies/cookies";  // Importation de la fonction get_cookie du fichier cookies.js dans le dossier cookies
+import { Find, FindById } from "../cookies/usermanagement";  // Importation de la fonction Find du fichier usermanagement.js dans le dossier cookies
+import { formatDistanceToNow } from 'date-fns';  // Importation de la fonction formatDistanceToNow de date-fns pour formater les dates
+import { fr } from 'date-fns/locale';  // Importation de la locale française pour date-fns
+import { Titre } from "./SemiComposent/SemiComponent";  // Importation du composant Titre de SemiComponent.js dans le dossier SemiComposent
 
-import { useEffect, useState } from "react";
-import Footer from "./Footer";
-import Header from "./Header";
-import { get_cookie } from "../cookies/cookies";
-import { Find, FindById } from "../cookies/usermanagement";
-import { formatDistanceToNow } from 'date-fns';
-import { fr } from 'date-fns/locale';
-import { Titre } from "./SemiComposent/SemiComponent";
+function Mesblogs(props) {  // Définition du composant fonctionnel Mesblogs
+    const [card, setCard] = useState([]);  // Déclaration d'un état pour stocker les cartes des blogs
+    const cookies = get_cookie("cookies_blog");  // Récupération des cookies nommés "cookies_blog"
+    if (!cookies) window.location.href = "/connexion";  // Redirection vers la page de connexion si les cookies n'existent pas
+    const blogs = Find("blogs");  // Récupération de la liste des blogs via la fonction Find
 
-function Mesblogs(props) {
-    const [card, setCard] = useState([])
-    const cookies = get_cookie("cookies_blog");
-    if(!cookies) window.location.href = "/connexion";
-    const blogs = Find("blogs");
-
-    const mesblogs = blogs.filter(item => item.user_id === cookies.id)
+    const mesblogs = blogs.filter(item => item.user_id === cookies.id);  // Filtrage des blogs pour obtenir ceux appartenant à l'utilisateur connecté
     const backgroundStyle = {
-        backgroundImage: 'url("/images/mybackground.jpeg")',
+        backgroundImage: 'url("/images/mybackground.jpeg")',  // Définition du style d'arrière-plan pour le composant
     };
 
-    const formatDate = (date) => {
-        return formatDistanceToNow(new Date(date), { addSuffix: true, locale: fr });
+    const formatDate = (date) => {  // Fonction pour formater les dates
+        return formatDistanceToNow(new Date(date), { addSuffix: true, locale: fr });  // Formattage de la date avec un suffixe et locale française
     };
 
-     useEffect(() => {
-         setCard(mesblogs.filter(item => Boolean(item.action)))
-       },
-     []);
-
+    useEffect(() => {
+        setCard(mesblogs.filter(item => Boolean(item.action)));  // Mise à jour de l'état 'card' avec les blogs ayant une action
+    }, []);  // Le tableau de dépendances est vide, donc l'effet s'exécute uniquement lors du premier rendu
      
     return (
         <>
@@ -45,7 +42,7 @@ function Mesblogs(props) {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-center px-2 mx-auto">
                                 {card.length ? card.map((item, index) => (
                                     <article class="bg-white  p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border">
-                                        <a target="_self" href={item.id+"/mes-blogs"} class="absolute opacity-0 top-0 right-0 left-0 bottom-0"></a>
+                                        <a target="_self" class="absolute opacity-0 top-0 right-0 left-0 bottom-0"></a>
                                         <div class="relative mb-4 rounded-2xl">
                                             <img class="max-h-80 rounded-2xl w-full object-cover transition-transform duration-300 transform group-hover:scale-105"
                                                 src={item.couverture} alt=""/>

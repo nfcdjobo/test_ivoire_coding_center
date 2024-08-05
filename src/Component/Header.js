@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { get_cookie, destrory } from "../cookies/cookies";
+import React, { useState, useEffect } from 'react';  // Importation des hooks useState et useEffect de React
+import { get_cookie, destrory } from "../cookies/cookies";  // Importation des fonctions get_cookie et destrory du fichier cookies.js dans le dossier cookies
 
+function Header(props) {  // Définition du composant fonctionnel Header
+    const [open, setOpen] = useState(false);  // Déclaration de l'état local pour gérer l'ouverture du menu
+    const [option, transformHeader] = useState(false);  // Déclaration de l'état local pour gérer les options du header
+    const [activeOption, setActiveOption] = useState("");  // Déclaration de l'état local pour suivre l'option active
+    const currentPath = window.location.pathname;  // Récupération du chemin d'accès actuel
 
-function Header(props) {
-    const [open, setOpen] = useState(false);
-    const [option, transformHeader] = useState(false);
-    const [activeOption, setActiveOption] = useState("");
-    const currentPath = window.location.pathname;
-
-    useEffect(() => {
-        const cookies = get_cookie("cookies_blog");
+    useEffect(() => {  // Utilisation du hook useEffect pour exécuter du code au montage du composant
+        const cookies = get_cookie("cookies_blog");  // Récupération des cookies nommés "cookies_blog"
         if (cookies) {
-            transformHeader(Boolean(cookies));
+            transformHeader(Boolean(cookies));  // Mise à jour de l'état option si les cookies existent
         }
-    }, []);
+    }, []);  // Tableau de dépendances vide, donc l'effet se déclenche uniquement au montage du composant
 
-    const handleOptionClick = (optionName) => {
-        setActiveOption(optionName);
+    const handleOptionClick = (optionName) => {  // Fonction pour gérer le clic sur une option
+        setActiveOption(optionName);  // Mise à jour de l'état activeOption avec le nom de l'option cliquée
     };
 
     return (
