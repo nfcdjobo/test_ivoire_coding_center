@@ -9,6 +9,8 @@ import Categories from './Categories';
 import Enattente from './Enattente';
 import Edite from './Edite';
 import Lecture from './Lecture';
+import Autres from './Autres';
+
 
 export const Routing = {
     home: {
@@ -60,5 +62,10 @@ export const Routing = {
         path: "/lecture",
         name: "Lecture",
         element: Lecture
+    },
+    autres: {
+        path: "/autres-blogs",
+        name: "Autres",
+        element: Autres
     }
 };

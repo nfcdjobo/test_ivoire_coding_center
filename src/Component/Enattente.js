@@ -6,6 +6,7 @@ import { get_cookie } from "../cookies/cookies";
 import { Find, FindById } from "../cookies/usermanagement";
 import { formatDistanceToNow } from 'date-fns';
 import { fr } from 'date-fns/locale';
+import { Titre } from "./SemiComposent/SemiComponent";
 
 
 function Enattente(props) {
@@ -36,7 +37,7 @@ function Enattente(props) {
     return (
         <>
             <Header/>
-
+            <Titre titre="Blogs en attente de publication"/>
 
             <div className="relative pt-2 lg:pt-2 min-h-screen">
 

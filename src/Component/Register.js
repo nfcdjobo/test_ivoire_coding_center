@@ -7,6 +7,7 @@ import { Create } from "../cookies/usermanagement";
 
 function Inscription(props) {
     const [value, setvalue] = useState('');
+    const [photo, setPhoto] = useState('');
     const cookies = get_cookie("cookies_blog");
     if(cookies) window.location.href = "/profile";
 
@@ -15,12 +16,24 @@ function Inscription(props) {
         setvalue(event.target.value);
     };
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setPhoto(reader.result);
+          };
+          
+          reader.readAsDataURL(file);
+        }
+      };
+
     const savin_login = event => {
         event.preventDefault();
         const nom=event.target.nom;
         const prenom = event.target.prenom;
         const email = event.target.email;
-        const telephone = event.target.telephone;
+        
         const password = event.target.password;
         const passwordConfirm = event.target.passwordConfirm;
         if(password.value !== passwordConfirm.value){
@@ -32,7 +45,7 @@ function Inscription(props) {
             nom: nom.value,
             prenom: prenom.value,
             email: email.value,
-            telephone: telephone.value,
+            photo,
             password: password.value,
             passwordConfirm: passwordConfirm.value
         }
@@ -86,7 +99,7 @@ function Inscription(props) {
                         <Input label={"Nom"} type={"text"} value={value} placeholder={"Entrez votre nom de famille"} name={"nom"} required={true} htmlFor={"nom"} id={"nom"} onChange={handlePasswordChange}/>
                         <Input label={"Prénom"} type={"text"} value={value} placeholder={"Entrez votre prénom"} name={"prenom"} required={true} htmlFor={"prenom"} id={"prenom"} onChange={handlePasswordChange}/>
 
-                        <Input label={"Téléphone"} type={"tel"} value={value} placeholder={"Entrez votre numéro de téléphone"} name={"telephone"} required={true} htmlFor={"telephone"} id={"telephone"} onChange={handlePasswordChange}/>
+                        <Input label={"Photo de profile"} type={"file"} value={photo} placeholder={"Entrez votre photo de profile"} name={"photo"} required={true} htmlFor={"photo"} id={"photo"} onChange={handleImageChange}/>
 
                         <Input label={"Email"} type={"email"} value={value} placeholder={"Entrez votre email"} name={"email"} required={true} htmlFor={"email"} id={"email"} onChange={handlePasswordChange}/>
                         

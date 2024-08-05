@@ -5,6 +5,7 @@ import Header from "./Header";
 import { get_cookie } from "../cookies/cookies";
 import { Create, Find } from "../cookies/usermanagement";
 import { useNavigate } from "react-router-dom";
+import { Titre } from "./SemiComposent/SemiComponent";
 
 
 
@@ -83,6 +84,7 @@ function Newblog(props) {
   return (
     <>
       <Header />
+      <Titre titre="Rédaction de nouveau blog"/>
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
           <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">

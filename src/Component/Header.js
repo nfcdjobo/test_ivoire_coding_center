@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { get_cookie } from "../cookies/cookies";
+import { get_cookie, destrory } from "../cookies/cookies";
+
 
 function Header(props) {
     const [open, setOpen] = useState(false);
     const [option, transformHeader] = useState(false);
     const [activeOption, setActiveOption] = useState("");
+    const currentPath = window.location.pathname;
 
     useEffect(() => {
         const cookies = get_cookie("cookies_blog");
@@ -59,34 +61,14 @@ function Header(props) {
                             option ? 
                             (
                                 <>
-                                    <a className="hover:bg-gray-400 rounded m-2 p-2" href="/deconnexion" rel="noopener noreferrer"> Déconnexion </a>
-                                    <a className="hover:bg-gray-400 rounded m-2 p-2" href="/profile" rel="noopener noreferrer"> profile </a>
-                                    <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown hover <svg className="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                                    </svg>
-                                    </button>
-                                    <div id="dropdownHover" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                                        <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
-                                        <li>
-                                            <a href="/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-                                        </li>
-                                        <li>
-                                            <a href="/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-                                        </li>
-                                        <li>
-                                            <a href="/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-                                        </li>
-                                        <li>
-                                            <a href="/" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
-                                        </li>
-                                        </ul>
-                                    </div>
+                                    <a href="/profile" className={`hover:bg-gray-400 rounded py-2 px-4 mx-2 ${currentPath.includes("/profile") ? "bg-gray-400" : ""}`}> Profile </a>
+                                    <button className="hover:bg-gray-400 rounded m-2 p-2" onClick={() => destrory("cookies_blog")} rel="noopener noreferrer"> Déconnexion </button>
                                 </>
                             ) : 
                             (
                                 <>
-                                    <a className="hover:bg-gray-400 rounded m-2 p-2" href="/connexion" rel="noopener noreferrer"> Connexion </a>
-                                    <a className="hover:bg-gray-400 rounded m-2 p-2" href="/inscription" rel="noopener noreferrer"> S'inscrire </a>
+                                    <a className={currentPath.includes("/connexion") ?"bg-gray-400 rounded m-2 p-2" : "hover:bg-gray-400 rounded m-2 p-2"} href="/connexion" rel="noopener noreferrer"> Connexion </a>
+                                    <a className={currentPath.includes("/inscription") ?"bg-gray-400 rounded m-2 p-2" : "hover:bg-gray-400 rounded m-2 p-2"} href="/inscription" rel="noopener noreferrer"> S'inscrire </a>
                                 </>
                             )
                         }
@@ -124,7 +106,7 @@ function Header(props) {
                         
                         <a
                             href={option ? "/mes-blogs" : "/connexion"}
-                            className={`hover:bg-gray-400 rounded py-2 px-4 mx-2 ${activeOption === "Mes Blogs" ? "bg-gray-400" : ""}`}
+                            className={`hover:bg-gray-400 rounded py-2 px-4 mx-2 ${currentPath.includes("/mes-blogs") ? "bg-gray-400" : ""}`}
                             onClick={() => handleOptionClick(option ? "Mes Blogs" : "Technologies")}
                         >
                             {option ? "Mes Blogs" : "Technologies"}
@@ -133,21 +115,21 @@ function Header(props) {
                             <>
                                 <a
                                     href="/new-blog"
-                                    className={`hover:bg-gray-400 rounded py-2 px-4 mx-2 ${activeOption === "Nouveau" ? "bg-gray-400" : ""}`}
+                                    className={`hover:bg-gray-400 rounded py-2 px-4 mx-2 ${currentPath.includes("/new-blog") ? "bg-gray-400" : ""}`}
                                     onClick={() => handleOptionClick("Nouveau")}
                                 >
-                                    Créér Nouveau Blog
+                                    Créer Nouveau Blog
                                 </a>
                                 <a
                                     href="/blog-en-attend"
-                                    className={`hover:bg-gray-400 rounded py-2 px-4 mx-2 ${activeOption === "En attente" ? "bg-gray-400" : ""}`}
+                                    className={`hover:bg-gray-400 rounded py-2 px-4 mx-2 ${currentPath.includes("/blog-en-attend") ? "bg-gray-400" : ""}`}
                                     onClick={() => handleOptionClick("En attente")}
                                 >
                                     Brouillons
                                 </a>
                                 <a
-                                    href="/politics"
-                                    className={`hover:bg-gray-400 rounded py-2 px-4 mx-2 ${activeOption === "Autres Publications" ? "bg-gray-400" : ""}`}
+                                    href="/autres-blogs"
+                                    className={`hover:bg-gray-400 rounded py-2 px-4 mx-2 ${currentPath.includes("/autres-blogs") ? "bg-gray-400" : ""}`}
                                     onClick={() => handleOptionClick("Autres Publications")}
                                 >
                                     Autres Publications

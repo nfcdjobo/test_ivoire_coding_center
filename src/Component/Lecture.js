@@ -4,6 +4,7 @@ import { FindById, FormatDate } from "../cookies/usermanagement";
 import Footer from "./Footer";
 import Header from "./Header";
 import { useLocation } from "react-router-dom";
+import { Titre } from "./SemiComposent/SemiComponent";
 
 
 const useQuery = () => {
@@ -19,6 +20,7 @@ function Lecture(props) {
     return (
         <>
             <Header />
+            <Titre titre="Lecture de Blog"/>
             <div className="container mx-auto flex flex-wrap py-6">
 
                 <section className="w-full md:w-2/3 flex flex-col items-center px-3">

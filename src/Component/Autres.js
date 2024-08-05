@@ -8,13 +8,13 @@ import { formatDistanceToNow } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { Titre } from "./SemiComposent/SemiComponent";
 
-function Mesblogs(props) {
+function Autres(props) {
     const [card, setCard] = useState([])
     const cookies = get_cookie("cookies_blog");
     if(!cookies) window.location.href = "/connexion";
     const blogs = Find("blogs");
 
-    const mesblogs = blogs.filter(item => item.user_id === cookies.id)
+    const mesblogs = blogs.filter(item => item.user_id !== cookies.id)
     const backgroundStyle = {
         backgroundImage: 'url("/images/mybackground.jpeg")',
     };
@@ -33,7 +33,7 @@ function Mesblogs(props) {
         <>
             <Header/>
 
-            <Titre titre="Blogs publiés"/>
+            <Titre titre="Actuelités"/>
 
             <div className="relative pt-2 lg:pt-2 min-h-screen">
 
@@ -73,7 +73,7 @@ function Mesblogs(props) {
                                         <div class="flex justify-between items-center w-full pb-4 mb-auto">
                                             <div class="flex items-center">
                                                 <div class="pr-3">
-                                                    <img class="h-12 w-12 rounded-full object-cover" src={item.couverture} alt=""/>
+                                                    <img class="h-12 w-12 rounded-full object-cover" src={FindById("users", item.user_id).photo} alt=""/>
                                                 </div>
                                                 <div class="flex flex-1">
                                                     <div class="">
@@ -85,18 +85,6 @@ function Mesblogs(props) {
                                             </div>
                                             <div class="flex justify-end">
                                                 <div class="text-sm flex items-center text-gray-500 ">
-
-                                                <a href={`/edite?poste=${item.id}`} class="block relative flex m-2 group-hover:text-red-700 transition-colors duration-200 ">
-                                                        <button class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
-                                                            <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                                                                <svg class="w-[60px] h-[60px] text-red-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
-                                                                </svg>
-                                                            </span>
-                                                        </button>
-                                                    </a>
-
-
                                                     {formatDate(item.date_publication)}
                                                     <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                                         xmlns="http://www.w3.org/2000/svg">
@@ -107,7 +95,7 @@ function Mesblogs(props) {
                                             </div>
                                         </div>
                                         <h3 class="font-medium text-xl leading-8">
-                                            <a href={item.id+"/mes-blogs"}
+                                            <a 
                                                 class="block relative group-hover:text-red-700 transition-colors duration-200 ">
                                                 {item.titre}
                                             </a>
@@ -127,4 +115,4 @@ function Mesblogs(props) {
     )
 }
 
-export default Mesblogs;
+export default Autres;

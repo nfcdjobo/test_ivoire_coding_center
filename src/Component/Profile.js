@@ -3,6 +3,7 @@ import { useState } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import { get_cookie } from "../cookies/cookies";
+import { Titre } from "./SemiComposent/SemiComponent";
 
 
 function Profile(props) {
@@ -11,6 +12,7 @@ function Profile(props) {
     return (
         <>
             <Header/>
+            <Titre titre="Mon profile"/>
             <div className="container mx-auto flex flex-wrap py-6">
                 <section className="w-full md:w-2/3 flex flex-col items-center px-3">
 

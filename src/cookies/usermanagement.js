@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import { get_cookie } from "./cookies";
 
 export const FindById = (modele, id) => {
-    let fetchDatas = modele === "blogs" ? localStorage.blogs : Cookies.get(modele);
+    let fetchDatas = ["blogs", "users"].includes(modele) ? localStorage[modele] : Cookies.get(modele);
     
     if(!fetchDatas) return null;
     fetchDatas = JSON.parse(fetchDatas);
@@ -11,7 +11,7 @@ export const FindById = (modele, id) => {
 }
 
 export const FindOne = (modele, property, value) => {
-    let fetchDatas = modele === "blogs" ? localStorage.blogs : Cookies.get(modele);
+    let fetchDatas = ["blogs", "users"].includes(modele) ? localStorage[modele] : Cookies.get(modele);
     if(!fetchDatas) return null;
     fetchDatas = JSON.parse(fetchDatas);
     const data =  fetchDatas.find(item => item[property] === value);
@@ -19,7 +19,7 @@ export const FindOne = (modele, property, value) => {
 }
 
 export const Find = (modele) => {
-    let fetchDatas = modele === "blogs" ? localStorage.blogs : Cookies.get(modele);
+    let fetchDatas = ["blogs", "users"].includes(modele) ? localStorage[modele] : Cookies.get(modele);
     return !fetchDatas || !fetchDatas.length ? [] : JSON.parse(fetchDatas);
 }
 
@@ -40,18 +40,21 @@ export const Create = (modele, data) => {
         if(!users.length){
             data.id = 1;
             data = [data];
-            Cookies.set(modele, JSON.stringify(data), { expires: 90, path: '/'});
-            return {status: 200, succes: true, message: "Created succefull", data};
+            localStorage.setItem("users", JSON.stringify(data));
+            // Cookies.set(modele, JSON.stringify(data), { expires: 90, path: '/'});
+            
         }else{
-            const userss = users.sort((a, b) => b.id - a.id)[0].id + 1;
+            const userss = users.sort((a, b) => b.id - a.id);
             data.id = userss[0].id + 1;
             users.push(data);
-            Cookies.set(modele, JSON.stringify(users), { expires: 90, path: '/'});
-            return {status: 200, succes: true, message: "Created succefull", data};
+            // Cookies.set(modele, JSON.stringify(users), { expires: 90, path: '/'});
+            localStorage.setItem("users", JSON.stringify(users));
         }
         
+        return {status: 200, succes: true, message: "Created succefull", data};
+        
     }else if(modele === "blogs"){
-        let collection = localStorage.blogs;
+        let collection = localStorage[modele];
         
         if(!collection || !JSON.parse(collection).length){
             data.id = 1;
@@ -121,10 +124,7 @@ export const FindOneAndUpdate = (modele, data, reference) => {
 }
 
 
-const  getOrdinalSuffix = day => {
-    if (day === 1) return 'er';
-    return 'e';
-  }
+
   
 export const FormatDate = date => {
     const monthNames = [

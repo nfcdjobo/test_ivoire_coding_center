@@ -74,3 +74,20 @@ export const  AutreGroup = (props) => {
         </>
     );
 }
+
+export const Titre = props => {
+    const {titre} = props;
+    return(
+        <div className="mx-auto mt-9 max-w-8xl">
+        <div class="flex flex-col gap-y-4 rounded-sm border border-stroke bg-white p-3 shadow-default dark:border-strokedark dark:bg-boxdark sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 class="text-2xl font-bold text-black dark:text-white">
+            {titre}
+            </h1>
+          </div>
+        </div>
+      </div>
+    )
+}
+
+
