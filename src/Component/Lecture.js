@@ -69,7 +69,6 @@ function Lecture(props) {  // Définition du composant fonctionnel Lecture
                     </div>
 
                 </aside>
-
             </div>
             <Footer/>
         </>
