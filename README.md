@@ -13,7 +13,7 @@ Le projet "Blog Personnel" est une application web qui permet aux utilisateurs d
 ## Technologies Utilisées
 
 - **Frontend** : HTML, CSS, JavaScript, React, Tailwind CSS
-- **Stockage Local** : LocalStorage, cookies-js pour la gestion des sessions et d'autre
+- **Stockage Local** : LocalStorage, cookies-js pour la gestion des sessions et les autres fonctionnalités du backend
 - **Outils de Développement** : npm, Webpack
 
 ## Installation
