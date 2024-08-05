@@ -1,7 +1,7 @@
 # Blog Personnel
 
 ## Vue d'ensemble du Projet
-
+Par défaut le contenu est vite, j'ai rendu le projet dynamique (Front-End et Back-End sont implémentés)
 Le projet "Blog Personnel" est une application web qui permet aux utilisateurs de créer, publier, commenter, liker et partager des articles de blog. Construit avec React et Tailwind CSS, ce projet utilise LocalStorage et le package `cookies-js` pour gérer les données et les sessions utilisateur sans backend.
 
 ### Objectifs du Projet
