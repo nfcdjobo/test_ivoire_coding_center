@@ -26,4 +26,4 @@ Avant de commencer, assurez-vous d'avoir installé Node.js et npm (Node Package 
 
 1. **Clonez le dépôt**
    ```sh
-   git clone https://github.com/votre-utilisateur/votre-depot.git
+   git clone https://github.com/nfcdjobo/test_ivoire_coding_center.git
