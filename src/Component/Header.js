@@ -106,9 +106,9 @@ function Header(props) {  // Définition du composant fonctionnel Header
                         <a
                             href={option ? "/mes-blogs" : "/connexion"}
                             className={`hover:bg-gray-400 rounded py-2 px-4 mx-2 ${currentPath.includes("/mes-blogs") ? "bg-gray-400" : ""}`}
-                            onClick={() => handleOptionClick(option ? "Mes Blogs" : "Technologies")}
+                            onClick={() => handleOptionClick(option ? "Mes Blogs" : "Sport")}
                         >
-                            {option ? "Mes Blogs" : "Technologies"}
+                            {option ? "Mes Blogs" : "Sport"}
                         </a>
                         {option && (
                             <>
